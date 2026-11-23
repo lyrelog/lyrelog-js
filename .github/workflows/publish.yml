@@ -1,9 +1,10 @@
 # A v* tag publishes @lyrelog/js to npm with provenance, after the tests, the type check and the
 # build. The tag must match package.json's version.
 #
-# The first version is published with NPM_TOKEN (npm can't trust a workflow for a package that
-# doesn't exist yet). After it, npm trusts this workflow (trusted publishing) and the token is
-# deleted: the job then signs in with GitHub's OIDC token alone.
+# No token: npm trusts this workflow in the environment "npm" (trusted publishing, OIDC), and the
+# package refuses tokens. 0.9.0 was published by hand, without provenance: npm refused the
+# first publish from CI with a bypass-2FA token, and a package must exist before it can trust a
+# workflow.
 name: publish
 
 on:
@@ -31,5 +32,3 @@ jobs:
         run: test "${GITHUB_REF_NAME#v}" = "$(node -p 'require("./package.json").version')"
       - run: pnpm install --frozen-lockfile
       - run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
