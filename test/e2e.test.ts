@@ -8,7 +8,7 @@ const key = process.env.LYRELOG_E2E_KEY;
 describe.skipIf(!url || !key)("end to end", () => {
   it("delivers events to a real ingest", async () => {
     const run = `e2e_${Date.now()}`;
-    const client = Lyrelog.init({ endpoint: url!, apiKey: key!, environment: "e2e", release: "0.9.0", appId: "lyrelog-js-tests" });
+    const client = Lyrelog.init({ endpoint: url!, apiKey: key!, environment: "e2e", release: "1.0.0", appId: "lyrelog-js-tests" });
     client.setUser("e2e-user");
     client.info("js_e2e_info", { category: "e2e", attrs: { run, n: 1, nested: { ok: true } }, payload: { hello: "world" } });
     client.logger("e2e").warning("js_e2e_warning", { attrs: { run } });

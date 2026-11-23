@@ -1,6 +1,6 @@
 {
   "name": "@lyrelog/js",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "Structured logs and errors from your website or Node service to Lyrelog, the hosted log service. No dependencies.",
   "license": "MIT",
   "author": "Lyrelog <hello@lyrelog.com>",

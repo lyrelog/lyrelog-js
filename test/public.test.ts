@@ -28,7 +28,7 @@ function publicFiles(): string[] {
   return files.filter((file) => fs.existsSync(path.join(root, file)));
 }
 
-describe("public files (0.9.1)", () => {
+describe("public files (1.0.0)", () => {
   it("name no real person, nor his apps or accounts", () => {
     const found: string[] = [];
     for (const file of publicFiles()) {
@@ -49,10 +49,10 @@ describe("public files (0.9.1)", () => {
     expect(pkg.bugs).toEqual({ url: "https://github.com/lyrelog/lyrelog-js/issues" });
   });
 
-  it("is version 0.9.1 in the package and the SDK string", () => {
+  it("is version 1.0.0 in the package and the SDK string", () => {
     const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")) as { version: string; scripts: Record<string, string> };
-    expect(pkg.version).toBe("0.9.1");
-    expect(SDK).toBe("lyrelog-js/0.9.1");
+    expect(pkg.version).toBe("1.0.0");
+    expect(SDK).toBe("lyrelog-js/1.0.0");
     expect(pkg.scripts.prepublishOnly).toBe("pnpm test && pnpm typecheck && pnpm build");
   });
 });
