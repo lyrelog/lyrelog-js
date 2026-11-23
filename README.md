@@ -1,4 +1,17 @@
-# Lyrelog for JavaScript
+<p align="center">
+  <a href="https://lyrelog.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://lyrelog.com/readme/js-dark.png">
+      <img alt="Lyrelog for JavaScript" src="https://lyrelog.com/readme/js-light.png" width="600">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://docs.lyrelog.com/sdks/javascript"><b>Documentation</b></a> ·
+  <a href="https://docs.lyrelog.com/quickstart">Quickstart</a> ·
+  <a href="https://lyrelog.com">lyrelog.com</a>
+</p>
 
 Structured logs and errors from your website or Node service to [Lyrelog](https://lyrelog.com),
 the hosted log service. TypeScript, no dependencies. Browsers and Node 22.12+.
