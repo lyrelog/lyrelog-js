@@ -1,10 +1,10 @@
 # A v* tag publishes @lyrelog/js to npm with provenance, after the tests, the type check and the
 # build. The tag must match package.json's version.
 #
-# No token: npm trusts this workflow in the environment "npm" (trusted publishing, OIDC), and the
-# package refuses tokens. 0.9.0 was published by hand, without provenance: npm refused the
-# first publish from CI with a bypass-2FA token, and a package must exist before it can trust a
-# workflow.
+# No token: npm trusts this workflow in the environment "npm" (trusted publishing, OIDC, direct
+# publish allowed), and the package refuses tokens. 0.9.0 was published by hand, without
+# provenance: npm refused the first publish from CI with a bypass-2FA token, and a package must
+# exist before it can trust a workflow. 0.9.1 is the same code, the first release with provenance.
 name: publish
 
 on:
