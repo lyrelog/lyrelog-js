@@ -1,0 +1,67 @@
+{
+  "name": "@lyrelog/js",
+  "version": "0.9.0",
+  "description": "Structured logs and errors from your website or Node service to Lyrelog, the hosted log service. No dependencies.",
+  "license": "MIT",
+  "author": "Lyrelog <hello@lyrelog.com>",
+  "homepage": "https://lyrelog.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyrelog/lyrelog-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyrelog/lyrelog-js/issues"
+  },
+  "keywords": [
+    "lyrelog",
+    "logging",
+    "logs",
+    "structured-logging",
+    "error-tracking",
+    "observability",
+    "browser",
+    "node"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22.12"
+  },
+  "exports": {
+    ".": {
+      "node": {
+        "types": "./dist/node.d.ts",
+        "default": "./dist/node.js"
+      },
+      "types": "./dist/browser.d.ts",
+      "default": "./dist/browser.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/node.js",
+  "module": "./dist/browser.js",
+  "browser": "./dist/browser.js",
+  "types": "./dist/browser.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm test && pnpm typecheck && pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "tsup": "9.0.0",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "packageManager": "pnpm@12.21.0"
+}

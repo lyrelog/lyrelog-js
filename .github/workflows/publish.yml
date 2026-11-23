@@ -1,0 +1,35 @@
+# A v* tag publishes @lyrelog/js to npm with provenance, after the tests, the type check and the
+# build. The tag must match package.json's version.
+#
+# The first version is published with NPM_TOKEN (npm can't trust a workflow for a package that
+# doesn't exist yet). After it, npm trusts this workflow (trusted publishing) and the token is
+# deleted: the job then signs in with GitHub's OIDC token alone.
+name: publish
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org
+      - name: The tag is the package's version
+        run: test "${GITHUB_REF_NAME#v}" = "$(node -p 'require("./package.json").version')"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

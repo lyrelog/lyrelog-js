@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.tgz
+
+# Agents guide: kept on the maintainer's machine, not in the public repo
+CLAUDE.md
