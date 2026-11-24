@@ -13,7 +13,7 @@
   <a href="https://lyrelog.com">lyrelog.com</a>
 </p>
 
-Structured logs and errors from your website or Node service to [Lyrelog](https://lyrelog.com),
+Structured logs and errors from your website or Node service to [Lyrelog](https://lyrelog.com/platforms/web),
 the hosted log service. TypeScript, no dependencies. Browsers and Node 22.12+.
 
 ## Install
