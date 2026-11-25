@@ -1,6 +1,7 @@
 import type { Platform, SessionClock, Spool } from "./platform.js";
 import { SDK, uuid } from "./platform.js";
 import * as prepare from "./prepare.js";
+import { debugIdsOf } from "./debug-ids.js";
 import { backoffDelay, classify, type Outcome } from "./upload.js";
 import {
   LEVELS,
@@ -900,6 +901,17 @@ function describeError(error: unknown, depth: number, redact: prepare.Redact, cl
   if (code !== undefined) out.code = prepare.truncate(prepare.stringForm(code, redact), prepare.MAX_ATTRIBUTE_STRING_BYTES);
   const cause = field(error, "cause");
   if (cause !== undefined && depth < 3) out.cause = describeError(cause, depth + 1, redact, clean);
+  if (depth === 0) {
+    // The bundles the stacks are in, by the debug ids `lyrelog sourcemaps inject` gave them: the
+    // server reads the frames with their source maps.
+    const stacks: string[] = [];
+    for (let e: unknown = out; typeof e === "object" && e !== null; e = (e as { cause?: unknown }).cause) {
+      const stack = (e as { stack?: unknown }).stack;
+      if (typeof stack === "string") stacks.push(stack);
+    }
+    const ids = safe(() => debugIdsOf(stacks, clean), undefined);
+    if (ids !== undefined) out.debug_ids = ids;
+  }
   return out;
 }
 

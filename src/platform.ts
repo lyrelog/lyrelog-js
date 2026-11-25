@@ -94,7 +94,7 @@ export function fanout<A extends unknown[]>(attach: (fire: (...args: A) => void)
   };
 }
 
-export const SDK = "lyrelog-js/1.0.0";
+export const SDK = "lyrelog-js/1.1.0";
 export const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
 
 /** A random UUID v4, even where `crypto.randomUUID` is missing (plain-http pages). */

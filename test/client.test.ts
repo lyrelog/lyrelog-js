@@ -33,7 +33,7 @@ describe("event shape", () => {
         app_version: "2.0",
         os_name: "test",
         os_version: "1",
-        sdk: "lyrelog-js/1.0.0",
+        sdk: "lyrelog-js/1.1.0",
         environment: "staging",
         platform: "node",
       },
