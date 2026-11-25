@@ -71,3 +71,34 @@ describe("debug ids", () => {
     delete g._lyrelogDebugIds;
   });
 });
+
+describe("debug ids, as the server reads frames", () => {
+  afterEach(() => {
+    delete g._lyrelogDebugIds;
+    delete g._sentryDebugIds;
+  });
+
+  it("reads a URL with parentheses (Next.js route groups)", () => {
+    expect(frameURL("    at Board.weight (https://shop.test/_next/static/chunks/app/(shop)/page-1a2b.js:1:139)")).toBe(
+      "https://shop.test/_next/static/chunks/app/(shop)/page-1a2b.js",
+    );
+    (g._lyrelogDebugIds = {} as Record<string, string>)["Error\n    at https://shop.test/_next/static/chunks/app/(shop)/page-1a2b.js:1:20"] = ID;
+    const stack = "TypeError: boom\n    at Board.weight (https://shop.test/_next/static/chunks/app/(shop)/page-1a2b.js:1:139)";
+    expect(debugIdsOf([stack], (s) => s)).toEqual({ "https://shop.test/_next/static/chunks/app/(shop)/page-1a2b.js": ID });
+  });
+
+  it("keeps Lyrelog's id for a bundle Sentry's tools gave one too", () => {
+    const key = "Error\n    at https://shop.test/main.js:1:20";
+    (g._lyrelogDebugIds = {} as Record<string, string>)[key] = ID;
+    (g._sentryDebugIds = {} as Record<string, string>)[key] = "11111111-2222-4333-8444-555555555555";
+    expect(debugIdsByURL((s) => s).get("https://shop.test/main.js")).toBe(ID);
+  });
+
+  it("reads a bundle loaded again with another id", () => {
+    const key = "Error\n    at https://shop.test/main.js:1:20";
+    (g._lyrelogDebugIds = {} as Record<string, string>)[key] = ID;
+    expect(debugIdsByURL((s) => s).get("https://shop.test/main.js")).toBe(ID);
+    (g._lyrelogDebugIds as Record<string, string>)[key] = "11111111-2222-4333-8444-555555555555";
+    expect(debugIdsByURL((s) => s).get("https://shop.test/main.js")).toBe("11111111-2222-4333-8444-555555555555");
+  });
+});
